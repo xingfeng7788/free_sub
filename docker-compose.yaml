@@ -8,3 +8,5 @@ services:
     restart: always
     ports:
       - 15000:5000
+    env_file:
+      - .env
