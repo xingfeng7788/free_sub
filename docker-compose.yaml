@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  freecatSub:
+    image: freecat-sub:latest
+    build:
+      context: .
+    container_name: freecat-sub
+    restart: always
+    ports:
+      - 15000:5000
