@@ -273,7 +273,7 @@ def login_get_subscribe_info(email, password):
         }
 
 
-def get_subscription_data(subscribe_url):
+def get_subscription_data(subscribe_url, params=None):
     try:
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -291,7 +291,7 @@ def get_subscription_data(subscribe_url):
         }
 
         # 发送GET请求
-        response = requests.get(subscribe_url, headers=headers)
+        response = requests.get(subscribe_url, headers=headers, params=params)
         response.raise_for_status()
         # 输出响应内容
         print(f"Status Code: {response.status_code}")
@@ -479,7 +479,8 @@ def subscribe_data():
 
         subscribe_url = result['data']['subscribe_url']
         if subscribe_url:
-            subscription_data = get_subscription_data(subscribe_url)
+            params = {k: v for k, v in request.args.items() if k != 'key'}
+            subscription_data = get_subscription_data(subscribe_url, params=params)
             return subscription_data
         else:
             return jsonify({
